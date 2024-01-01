@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+
+<body style="background-color: #43ffd0; font-family: 'Comic Sans MS', cursive; color:chartreuse; font-size: 20px; ">
+    <h4 font-size: 30px;>veuillez entrer vos informations ici:</h4>
+    <form id="monFormulaire">
+        <label for="prenom">Nom et Prénom :</label>
+        <input type="text" id="prenom" name="prenom" style="background-color: red; color:rgb(255, 255, 255);" required>
+
+        <label for="age">Age :</label>
+        <input type="number" id="age" name="age"style="background-color: red; color: white;" required>
+
+        <label for="Niveau">Niveau d'étude :</label>
+        <input type="text" id="Niveau" name="Niveau" style="background-color: red; color: rgb(255, 255, 255);" required>
+
+        <label for="competance">Compétances :</label>
+        <input type="text" id="competance" name="competance" style="background-color: red; color: rgb(255, 255, 255);" required>
+
+        <label for="apprendre"> vous voullez apprendre quoi en 2024?</label>
+        <input type="text" id="apprendre" name="apprendre" style="background-color: red; color: rgb(255, 255, 255);" required>
+
+        <label for="file">Donnez votre photo (en PNG svp) :</label>
+        <input type="file" id="file" name="file" accept=".png, .jpg, .pdf, .gif, .mp4" onchange="checkFileSize()" style="background-color: red; color: rgb(255, 255, 255); "required>
+
+        <input type="button" value="Voir ma carte" onclick="afficherInformations()" style="font-family: 'Comic Sans MS', cursive;font-size: 25px; background-color: yellow; color: rgb(255, 52, 52);">
+    </form>
+
+    <div id="informations" style="  background-image: url('1.jpg'); background-size: cover; color: #1541d1;">
+      
+    </div>
+    <div id="commentaire" style="visibility: hidden;">
+        <button style="background-color: blueviolet; color: #81fa1f;" onclick="VoirCommentaires()">Voir les commentaires</button>
+        <button style="background-color: rgb(255, 12, 113); color: #1541d1;"onclick="VoirCommentaires(),VoirAjouterCommentaire()" >Ajouter un commentaire</button>
+    </div>
+    <div id="VoirCommentaire" style="visibility: hidden; background-color: rgb(224, 224, 153); color: #d14a15;">
+     <P>chahinez : ca me rappelle les cartes qu'on faisait au primaire</P>
+     <P>Nassira : J'adors ca ! </P>
+     <div id="Voir"></div>
+     <div id="Ajouter" style="visibility: hidden; background-color: rgb(224, 224, 153); color: #d14a15;">
+        <label for="nouveauCommentaire"></label>
+        <input  id="nouveauCommentaire" name="nouveauCommentaire"> 
+        <button onclick="AjouterCommentaire()"> ajouter </button>
+       </div>
+     
+<div id="Ajouter" style="visibility: hidden; background-color: rgb(224, 224, 153); color: #d14a15;">
+    <label for="nouveauCommentaire">Commentaire :</label>
+    <input id="nouveauCommentaire" name="nouveauCommentaire">
+    <button onclick="AjouterCommentaire()">Ajouter</button>
+</div>
+
+     
+    <script>
+         function checkFileSize() {
+            var photoInput = document.getElementById("file");
+            var fileSize = photoInput.files[0].size; // Taille du fichier en octets
+            var maxSizeInBytes = 8*1024 * 1024; // 1 Mo (ajustez selon vos besoins)
+
+            if (fileSize > maxSizeInBytes) {
+                alert("La taille du fichier dépasse la limite autorisée (1 Mo). Veuillez choisir un fichier plus petit.");
+                photoInput.value = "";
+            }
+        }
+      function afficherInformations() {
+     var prenom = document.getElementById("prenom").value;
+    var age = document.getElementById("age").value;
+    var niveau = document.getElementById("Niveau").value;
+    var apprendre=document.getElementById("apprendre").value;
+    var competance=document.getElementById("competance").value;
+    var photoInput = document.getElementById("file");
+    var comtDiv = document.getElementById("commentaire");
+    var informationsDiv = document.getElementById("informations");
+    informationsDiv.style.width = "800px";
+    informationsDiv.style.height = "400px";
+    if (!prenom || !age || !niveau || !apprendre || !competance) {
+        alert("Veuillez remplir tous les champs avant de continuer.");
+        return;
+    }
+        comtDiv.style.visibility = "visible";
+    
+    if (photoInput.files && photoInput.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var photoElement = document.createElement("img");
+            photoElement.src = e.target.result;
+            photoElement.alt = "Photo";
+            photoElement.style.width = "180px";
+            photoElement.style.height = "150px";
+            photoElement.style.float = "right";
+            photoElement.style.paddingRight="60px"
+            photoElement.style.borderRadius="5%"
+            informationsDiv.innerHTML = "<h4 style='text-align: center;'>Moi en 2023 .°><°. </h4>" ; 
+
+            informationsDiv.appendChild(photoElement);
+
+            informationsDiv.innerHTML += 
+                "<p style='padding-left: 30%;'>" + prenom + "</p>" +
+                "<p style='padding-left:5%;'>Age : " + age + "</p>" +
+                "<p style='padding-left:5%;'>Niveau d'étude : " + niveau + "</p>"+
+                "<p style='padding-left:5%;'>Mes compétances : " + competance + "</p>"+
+                "<p style='padding-left:5%;'>En 2024 je veux apprendre : " + apprendre + "</p>" ;
+           
+        };
+        reader.readAsDataURL(photoInput.files[0]);
+    }else { informationsDiv.innerHTML = "<h4 style='text-align: center;'>Moi en 2023 .°><°. </h4>" +
+                "<p style='padding-left:30%;'> " + prenom + "</p>" +
+                "<p style='padding-left:5%;'>Age : " + age + "</p>" +
+                "<p style='padding-left:5%;'>Niveau d'étude : " + niveau + "</p>"+
+                "<p style='padding-left:5%;'>Mes compétances : " + competance + "</p>"+
+                "<p style='padding-left:5%;'>En 2024 je veux apprendre : " + apprendre + "</p>";
+            } 
+    
+}
+function VoirCommentaires (){
+    var Voir = document.getElementById("VoirCommentaire");
+    Voir.style.visibility="visible";
+}
+function VoirAjouterCommentaire(){
+    var ajoute = document.getElementById("Ajouter");
+    ajoute.style.visibility="visible";
+}
+window.onload = function () {
+    var storedComments = localStorage.getItem("comments");
+    if (storedComments) {
+        var Voir = document.getElementById("Voir");
+        Voir.innerHTML = storedComments;
+    }
+}
+function AjouterCommentaire() {
+    var ajouter = document.getElementById("Voir");
+    var comment = document.getElementById("nouveauCommentaire").value;
+    var prenom = document.getElementById("prenom").value;
+    ajouter.innerHTML += "<p> " + prenom + ": " + comment + "</p>";
+
+    var currentComments = ajouter.innerHTML;
+    localStorage.setItem("comments", currentComments);
+}
+
+    </script>
+</body>
+
+</html>
