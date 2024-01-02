@@ -124,21 +124,23 @@ function VoirAjouterCommentaire(){
     var ajoute = document.getElementById("Ajouter");
     ajoute.style.visibility="visible";
 }
-window.onload = function () {
-    var storedComments = localStorage.getItem("comments");
-    if (storedComments) {
-        var Voir = document.getElementById("Voir");
-        Voir.innerHTML = storedComments;
-    }
-}
 function AjouterCommentaire() {
     var ajouter = document.getElementById("Voir");
     var comment = document.getElementById("nouveauCommentaire").value;
     var prenom = document.getElementById("prenom").value;
     ajouter.innerHTML += "<p> " + prenom + ": " + comment + "</p>";
 
+    // Mettez à jour le localStorage avec les commentaires actuels
     var currentComments = ajouter.innerHTML;
     localStorage.setItem("comments", currentComments);
+}
+
+window.onload = function () {
+    var storedComments = localStorage.getItem("comments");
+    if (storedComments) {
+        var Voir = document.getElementById("Voir");
+        Voir.innerHTML = storedComments;
+    }
 }
     </script>
    
